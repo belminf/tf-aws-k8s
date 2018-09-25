@@ -42,7 +42,7 @@ data "template_file" "master" {
   template = "${file("${path.root}/user_data/master.tpl")}"
 
   vars {
-    kubeadm_token = "${random_string.kubeadm_token.result}"
+    kubeadm_token = "${random_string.kubeadm_token1.result}.${random_string.kubeadm_token2.result}"
   }
 }
 
