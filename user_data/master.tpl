@@ -15,8 +15,13 @@ runcmd:
   - systemctl daemon-reload
   - systemctl enable docker kubelet
   - systemctl start docker
-  - kubeadm init --token=${kubeadm_token}
-  - kubectl apply -f https://git.io/weave-kube
+  - kubeadm init --token="${kubeadm_token}" --pod-network-cidr="10.244.0.0/16"
+  - mkdir -p /home/ubuntu/.kube
+  - cp -i /etc/kubernetes/admin.conf /home/ubuntu/.kube/config
+  - chown ubuntu:ubuntu /home/ubuntu/.kube/config
+  - sudo -u ubuntu kubectl get nodes
+  - sudo -u ubuntu kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/canal/rbac.yaml
+  - sudo -u ubuntu kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/canal/canal.yaml
 
 output:
     init: "/var/log/cloud-init.log"
