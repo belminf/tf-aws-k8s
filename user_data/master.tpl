@@ -19,12 +19,10 @@ runcmd:
   - kubectl apply -f https://git.io/weave-kube
 
 output:
-    init:
-        output: "> /var/log/cloud-init.out"
-        error: "> /var/log/cloud-init.err"
-    config: "tee -a /var/log/cloud-config.log"
+    init: "/var/log/cloud-init.log"
+    config: "/var/log/cloud-config.log"
     final:
-        - ">> /var/log/cloud-final.out"
+        - "/var/log/cloud-final.out"
         - "/var/log/cloud-final.err"
 
 final_message: "The system is finally up, after $UPTIME seconds"
